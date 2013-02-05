@@ -1,7 +1,22 @@
-sketcher
-========
+KW-Android
+==========
 
-If you put an Android project in here, it's best to put it one level down,
-perhaps under a folder called Android. Then you can add other stuff at the
-top level, such as docs or data files etc.
- -- gdm
+Copyright
+---------
+(c) 2013 KW Android Developers Group, Kitchener-Waterloo, Ontario, Canada
+
+License
+-------
+Except where noted otherwise, all content and software of the KW-Android
+projects are licensed under the Apache License, Version 2.0 (ALv2).
+
+Contact
+-------
+[KW Android Developers](http://www.meetup.com/KW-Android-Developers/)
+
+Contents
+--------
+* android       - The Sketcher application
+* LICENSE       - License
+* NOTICE        - Copyright
+* README.md     - This file
