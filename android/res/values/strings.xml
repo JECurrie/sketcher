@@ -1,0 +1,9 @@
+<resources>
+    
+    <string name="activity_sketch">Sketcher</string>
+    
+    <string name="application_name">Sketcher</string>
+
+    <string name="content_description_sketch">Sketch area</string>
+    
+</resources>
