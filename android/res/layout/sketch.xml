@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.kwandroid.sketcher"
     android:id="@+id/layout_sketch"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:animateLayoutChanges="true" >
 
     <Button
         android:id="@+id/button1"
@@ -20,5 +22,7 @@
 		android:layout_height="fill_parent"
 		android:layout_gravity="center"
 		android:src="@drawable/splash_logo"
+		custom:startColor = "#000000"
+		custom:backgroundColor = "#ffffff"
 	    />
 </LinearLayout>

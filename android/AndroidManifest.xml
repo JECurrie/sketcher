@@ -12,6 +12,7 @@
         android:label="@string/application_name"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme"
+        android:allowBackup="true"
         >
         
         <activity

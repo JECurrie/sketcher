@@ -1,6 +1,7 @@
 package com.kwandroid.sketcher.app;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.kwandroid.sketcher.R;
+
 public class SketchView extends View {
 	
     private Bitmap  mBitmap;
@@ -17,16 +20,29 @@ public class SketchView extends View {
     private Paint   mPaint;
     private Paint   mBitmapPaint;
     private Path    mPath;
+    private int 	mStartColor;
+    private int 	mBackgroundColor;
     
     private float mX, mY;
     private static final float TOUCH_TOLERANCE = 4;
 
-	public SketchView(Context context, AttributeSet attributeSet) {
-		super(context, attributeSet);
+	public SketchView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SketchView, 0, 0);
+
+		   try {
+			   mStartColor = a.getColor(R.styleable.SketchView_startColor,  Color.BLACK);
+			   mBackgroundColor = a.getColor(R.styleable.SketchView_backgroundColor,  Color.WHITE);
+
+		   } finally {
+		       a.recycle();
+		   }
+		
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(mStartColor);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -34,6 +50,8 @@ public class SketchView extends View {
         
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         mPath = new Path();
+        
+        this.setBackgroundColor(mBackgroundColor);
 	}
 	
 	@Override
@@ -68,7 +86,6 @@ public class SketchView extends View {
         mPath.lineTo(mX, mY);
         mCanvas.drawPath(mPath, mPaint); // commit the path to our offscreen
         mPath.reset(); // kill this so we don't double draw
-
     }
     
     @Override
@@ -102,19 +119,11 @@ public class SketchView extends View {
 		return mBitmap;
     }
     
-    public void setColor(int color) {
-        mPaint.setColor(color);
-    }
-    
-    public int getColor() {
-        return mPaint.getColor();
-    }
-    
     public void clear(View view) {
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(mBackgroundColor);
         mCanvas.drawPaint(mPaint);
         invalidate();
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(mStartColor);
     }
 }
 

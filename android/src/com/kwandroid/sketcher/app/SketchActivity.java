@@ -2,7 +2,6 @@ package com.kwandroid.sketcher.app;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,8 +10,6 @@ import com.kwandroid.sketcher.R;
 
 public class SketchActivity extends Activity {
 	
-	int INITIAL_COLOR = Color.BLACK;
-
 	private SketchView mSketchView;
 	
 	@Override
