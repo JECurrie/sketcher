@@ -8,9 +8,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.ImageView;
+import android.view.View;
 
-public class SketchView extends ImageView {
+public class SketchView extends View {
 	
     private Bitmap  mBitmap;
     private Canvas  mCanvas;
@@ -31,9 +31,23 @@ public class SketchView extends ImageView {
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(8);
+        
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         mPath = new Path();
 	}
+	
+	@Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        mCanvas = new Canvas(mBitmap);
+    }
+	
+	@Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
+        canvas.drawPath(mPath, mPaint);
+    }
     
     private void touchDown(float x, float y) {
         mPath.reset();
@@ -51,10 +65,10 @@ public class SketchView extends ImageView {
         }
     }
     private void touchUp(float x, float y) {
-    	mCanvas.drawPoint(x, y, mPaint);
         mPath.lineTo(mX, mY);
-        mCanvas.drawPath(mPath, mPaint);
-        mPath.reset();
+        mCanvas.drawPath(mPath, mPaint); // commit the path to our offscreen
+        mPath.reset(); // kill this so we don't double draw
+
     }
     
     @Override
@@ -79,12 +93,6 @@ public class SketchView extends ImageView {
         return true;
     }
     
-    @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-        canvas.drawPath(mPath, mPaint);
-    }
-    
     public void setBitmap(Bitmap bitmap) {
 		mBitmap = bitmap.copy(bitmap.getConfig(), true);
         mCanvas = new Canvas(mBitmap);
@@ -100,6 +108,13 @@ public class SketchView extends ImageView {
     
     public int getColor() {
         return mPaint.getColor();
+    }
+    
+    public void clear(View view) {
+        mPaint.setColor(Color.WHITE);
+        mCanvas.drawPaint(mPaint);
+        invalidate();
+        mPaint.setColor(Color.BLACK);
     }
 }
 

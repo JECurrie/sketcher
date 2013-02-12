@@ -2,12 +2,10 @@ package com.kwandroid.sketcher.app;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.ViewGroup.LayoutParams;
+import android.view.View;
 
 import com.kwandroid.sketcher.R;
 
@@ -16,7 +14,6 @@ public class SketchActivity extends Activity {
 	int INITIAL_COLOR = Color.BLACK;
 
 	private SketchView mSketchView;
-	private Bitmap mBitmap;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,13 +21,6 @@ public class SketchActivity extends Activity {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         setContentView(R.layout.sketch);
         mSketchView = (SketchView) findViewById(R.id.view_sketch);
-		mBitmap = Bitmap.createBitmap(800, 600, Config.ARGB_8888);
-		mBitmap.eraseColor(Color.WHITE);
-        mSketchView.setBitmap(mBitmap);
-        LayoutParams layoutParams = mSketchView.getLayoutParams();
-        layoutParams.width = mBitmap.getWidth();
-        layoutParams.height = mBitmap.getHeight();
-        mSketchView.setLayoutParams(layoutParams);
     }
 	
 	@Override
@@ -54,5 +44,17 @@ public class SketchActivity extends Activity {
 		}
 	    return false;
 	}
+
+	public SketchView getMSketchView() {
+		return mSketchView;
+	}
+
+	public void setMSketchView(SketchView mSketchView) {
+		this.mSketchView = mSketchView;
+	}
+	
+    public void clear(View view) {
+    	mSketchView.clear(view);
+    }
 
 }
